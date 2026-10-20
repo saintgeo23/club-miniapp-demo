@@ -2,12 +2,14 @@
 import type { Client } from '../api'
 import { config } from '../config'
 import { plural } from '../format'
+import { shareToChat } from '../platform'
 
 const props = defineProps<{ referral: Client['referral'] }>()
 const emit = defineEmits<{ toast: [string] }>()
 const n = new Intl.NumberFormat('ru-RU')
 
 async function share() {
+  if (shareToChat(props.referral.link, config.texts.referral)) return
   const text = `${config.texts.referral}\n${props.referral.link}`
   if (navigator.share) {
     await navigator.share({ text }).catch(() => undefined)

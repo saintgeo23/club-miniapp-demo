@@ -57,6 +57,17 @@ html, body {
     calc(32px + env(safe-area-inset-bottom));
 }
 
+/* Opaque strip under Telegram's status bar and Close/... buttons, so scrolled content doesn't run beneath them. */
+.top-scrim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, 0px));
+  background: var(--bg);
+  z-index: 30;
+}
+
 h2 {
   font-size: 13px;
   font-weight: 600;

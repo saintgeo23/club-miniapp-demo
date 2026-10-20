@@ -85,6 +85,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <div class="top-scrim" />
   <div v-if="loading" class="stack">
     <div class="skeleton" style="height: 190px" />
     <div class="skeleton" style="height: 100px" />

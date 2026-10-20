@@ -94,6 +94,13 @@ export async function openManagerChat(links: ManagerLinks, text: string): Promis
   return 'copied'
 }
 
+/** Native "send to a chat" picker in Telegram. Elsewhere returns false and the caller falls back. */
+export function shareToChat(url: string, text: string): boolean {
+  if (kind !== 'telegram') return false
+  tg!.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`)
+  return true
+}
+
 export function openExternal(url: string): void {
   if (kind === 'telegram') tg!.openLink(url)
   else if (kind === 'max') max!.openLink(url)
