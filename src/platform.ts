@@ -7,6 +7,10 @@ interface TgWebApp {
   ready(): void
   expand(): void
   colorScheme: 'light' | 'dark'
+  platform: string
+  isVersionAtLeast(version: string): boolean
+  requestFullscreen(): void
+  disableVerticalSwipes(): void
   requestContact(cb?: (ok: boolean, res?: { responseUnsafe?: { contact?: { phone_number?: string } } }) => void): void
   openTelegramLink(url: string): void
   openLink(url: string): void
@@ -48,6 +52,10 @@ export function init(): void {
     tg!.ready()
     tg!.expand()
     document.documentElement.dataset.theme = tg!.colorScheme
+    // Scrolling up must not collapse the app.
+    if (tg!.isVersionAtLeast('7.7')) tg!.disableVerticalSwipes()
+    // Fullscreen only on phones: on desktop it blows the window up to the whole monitor.
+    if (tg!.isVersionAtLeast('8.0') && ['ios', 'android'].includes(tg!.platform)) tg!.requestFullscreen()
   } else if (kind === 'max') {
     max!.ready?.()
   }
